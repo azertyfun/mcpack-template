@@ -24,6 +24,15 @@ env.filters['required'] = required
 
 for file in src.glob('**/*'):
     rel = file.relative_to(src)
+
+    hidden = False
+    for el in rel.parts:
+        if el.startswith('.'):
+            hidden = True
+            break
+    if hidden:
+        continue
+
     if file.is_dir():
         (dest / rel).mkdir(exist_ok=True, parents=True)
 
